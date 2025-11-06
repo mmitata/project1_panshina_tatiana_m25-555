@@ -1,7 +1,7 @@
 ROOMS = {
     'entrance': {
         'description': 'Вы в темном входе лабиринта. Стены покрыты мхом. На полу лежит старый факел.',
-        'exits': {'north': 'hall', 'east': 'trap_room'},
+        'exits': {'north': 'hall', 'east': 'trap_room', 'west': 'dining_room'},
         'items': ['torch'],
         'puzzle': None
     },
@@ -37,7 +37,7 @@ ROOMS = {
     },
     'dining_room': {
         'description': 'Комната, внури которой большой стол. На нем стоит еда, но она выглядит сликшом свежей для этого места. В углу виднеется зеркало.',
-        'exits': {'east': 'entrance', 'north': 'library'},
+        'exits': {'east': 'entrance', 'north': 'library', 'west': 'kitchen'},
         'items': ['fruits', 'mirror'],
         'puzzle': ('Из зеркала доносится голос: "Что такое? Идешь - идет рядом, встанешь - останавливается?"', 'тень')
     },
