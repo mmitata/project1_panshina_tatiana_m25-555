@@ -45,3 +45,4 @@
     make project
 
 ## Пример игрового процесса (asciinema)
+https://asciinema.org/a/Bh3XhsnBOKG4cPfmOBfkvIdV1
