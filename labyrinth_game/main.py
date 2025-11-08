@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
-from labyrinth_game.constants import ROOMS
-from labyrinth_game.utils import describe_current_room, solve_puzzle, show_help, attempt_open_treasure, pseudo_random, trigger_trap, random_event
-from labyrinth_game.player_actions import move_player, take_item, show_inventory, get_input, use_item
-import math
+from labyrinth_game.player_actions import (
+    get_input,
+    move_player,
+    show_inventory,
+    take_item,
+    use_item,
+)
+from labyrinth_game.utils import (
+    attempt_open_treasure,
+    describe_current_room,
+    show_help,
+    solve_puzzle,
+)
+
 
 def proccess_command(game_state, command):
+    '''
+    Соотносит команды и функции.
+    '''
     commands = command.split()
-    directions = ('')
     match commands[0]:
         case "look":
             describe_current_room(game_state)
@@ -21,7 +33,7 @@ def proccess_command(game_state, command):
         case 'inventory':
             show_inventory(game_state)
         case 'quit':
-            print(f'Игра окончена. Количество наград {game_state['awards']}')
+            print(f'Игра окончена. Количество наград {game_state["awards"]}')
             game_state['game_over'] = True
         case 'solve':
             if game_state['current_room'] == 'treasure_room':
@@ -33,6 +45,9 @@ def proccess_command(game_state, command):
 
 
 def main():
+    '''
+    Сохраняет прогресс игры.
+    '''
     game_state = {
     'player_inventory': [], # Инвентарь игрока
     'current_room': 'entrance', # Текущая комната
@@ -41,7 +56,9 @@ def main():
     'awards': 0 #Награды
     }
 
-    print("Добро пожаловать в Лабиринт сокровищ!. Для вывода списка команд введите help")
+    print(
+        "Добро пожаловать в Лабиринт сокровищ!. "
+        "Для вывода списка команд введите help")
     describe_current_room(game_state)
     while not game_state['game_over']:
         command = get_input()

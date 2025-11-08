@@ -1,12 +1,22 @@
+
 from labyrinth_game.constants import ROOMS
 from labyrinth_game.utils import random_event
-import math
 
 
 def show_inventory(game_state):
-    print('Инвентарь пуст.' if len(game_state['player_inventory']) == 0 else ', '.join(game_state['player_inventory']))
+    '''
+    Выводит содержимое инвентаря на экран.
+    '''
+    print(
+        'Инвентарь пуст.' 
+        if len(game_state['player_inventory']) == 0 
+        else ', '.join(game_state['player_inventory'])
+        )
 
 def get_input(prompt="> "):
+    '''
+    Выводит выбор игрока, а также позволяет закончить игру сочетанием клавиш.
+    '''
     try:
         return input(prompt)
     except (KeyboardInterrupt, EOFError):
@@ -14,15 +24,23 @@ def get_input(prompt="> "):
         return "quit" 
 
 def move_player(game_state, direction):
+    '''
+    Позволяет перемещаться между комнатами.
+    '''
     if direction in ROOMS[game_state['current_room']]['exits']:
         if ROOMS[game_state['current_room']]['exits'][direction] == 'treasure_room':
             if 'rusty_key' in game_state['player_inventory']:
-                print("Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ.")
+                print(
+                    'Вы используете найденный ключ, чтобы '
+                    'открыть путь в комнату сокровищ.'
+                    )
                 game_state['current_room'] = 'treasure_room'
             else:
                 print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
         else:
-            game_state['current_room'] = ROOMS[game_state['current_room']]['exits'][direction]
+            game_state['current_room'] = ROOMS[
+                game_state['current_room']
+            ]['exits'][direction]
             game_state['steps_taken'] += 1
             print(ROOMS[game_state['current_room']]['description'])
             random_event(game_state)
@@ -30,6 +48,9 @@ def move_player(game_state, direction):
         print("Нельзя пойти в этом направлении.")
 
 def take_item(game_state, item_name):
+    '''
+    Позволяет поднимать предметы.
+    '''
     if item_name == 'treasure_chest':
         print("Вы не можете поднять сундук, он слишком тяжелый.")
     elif item_name in ROOMS[game_state['current_room']]['items']:
@@ -40,6 +61,9 @@ def take_item(game_state, item_name):
         print("Такого предмета здесь нет.")
 
 def use_item(game_state, item_name):
+    '''
+    Позволяет использовать предметы.
+    '''
     if item_name not in game_state['player_inventory']:
         print("У вас нет такого предмета.")
     else:
